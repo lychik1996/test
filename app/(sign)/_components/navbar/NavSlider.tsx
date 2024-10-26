@@ -26,18 +26,31 @@ const arrSlider = [
 ];
 export default function NavSlider() {
   const [count, setCount] = useState(0);
+  const [skipAnimation,setSkipAnimation]=useState(false);
+  useEffect(() => {
+    let intervalTime = count === arrSlider.length ? 700 : 3000;
 
-  useEffect(()=>{
-    const interval = setInterval(() => {
-      setCount(prevCount => (prevCount + 1) % arrSlider.length);
-    }, 2000); 
-    return () => clearInterval(interval);
-  },[])
+    const timer = setTimeout(() => {
+      setSkipAnimation(false);
+      setCount((prevCount) => {
+        if (prevCount === arrSlider.length) {
+          setSkipAnimation(true);
+          return 0;
+        }
+        return prevCount + 1
+      });
+    }, intervalTime);
+
+    return () => clearTimeout(timer);
+  }, [count]);
   return (
     <div className="w-[364px] hidden lg:flex flex-col items-center gap-4">
       <div className="w-full overflow-hidden relative h-[92px]">
-        <div className="flex flex-row absolute gap-2 transition-all duration-500 ease-in-out" style={{transform: `translateX(${-count * 372}px)`,}}>
-          {arrSlider.map((item, i) => (
+        <div  className={clsx(
+          "flex flex-row absolute gap-2 ",
+          !skipAnimation && 'transition-all duration-700 ease-in-out'
+        )} style={{transform: `translateX(${-count * 372}px)`}}>
+          {[...arrSlider, arrSlider[0]].map((item, i) => (
             <div
               key={i}
               className="flex flex-row p-4 items-center gap-4 rounded-lg bg-darkBlue20 w-[364px]"
@@ -56,7 +69,7 @@ export default function NavSlider() {
       <div className='flex flex-row justify-around gap-3'>
         {arrSlider.map((_, i) => (
           <div key={i} className={clsx("size-2 rounded-full",
-            count===i? 'bg-chadBlue30':"bg-darkBlue20",
+            count%arrSlider.length===i? 'bg-chadBlue30':"bg-darkBlue20",
           )}></div>
         ))}
       </div>
