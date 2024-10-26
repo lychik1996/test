@@ -14,16 +14,22 @@ const config: Config = {
       colors:{
         chadBlue30:'rgb(150, 202, 247)',
         darkBlue60:'rgb(93, 127, 163)',
-        darkBlue80:'rgb(147, 168, 193)'
+        darkBlue80:'rgb(147, 168, 193)',
+        darkBlue20:'rgb(19, 66, 103)',
+        shade40:'rgb(79, 99, 125)',
+        shade80:'rgb(195, 202, 213)'
       },
       backgroundColor:{
         darkBlue20:'rgb(19, 66, 103)',
         chadBlue30:'rgb(150, 202, 247)',
         chadBlue0:'rgb(50, 171, 242)',
+        shade100:'rgb(248, 249, 252)',
+        darkBlue95:'rgb(201, 211, 224)'
       },
       borderColor:{
         chadBlue0:'rgb(50, 171, 242)',
-        darkBlue60:'rgb(93, 127, 163)'
+        darkBlue60:'rgb(93, 127, 163)',
+        darkBlue95:'rgb(201, 211, 224)'
       }
     },
   },
