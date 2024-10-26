@@ -10,6 +10,13 @@ const config: Config = {
     extend: {
       fontFamily:{
         eudoxus: ['Eudoxus Sans', 'sans-serif'],
+      },
+      colors:{
+        chadBlue30:'rgb(150, 202, 247)'
+      },
+      backgroundColor:{
+        darkBlue20:'rgb(19, 66, 103)',
+        chadBlue30:'rgb(150, 202, 247)'
       }
     },
   },
