@@ -16,7 +16,7 @@ export default function SignResponse({
     router.push(`/${href}`);
   };
   return (
-    <div className=" w-full sm:w-[479px] shadow-signR px-8 sm:pb-[126px] sm:pt-[91px] sm:px-[66px] flex flex-col items-center bg-white">
+    <div className=" w-full sm:w-[479px] sm:rounded-lg sm:shadow-signR px-8 sm:pb-[126px] sm:pt-[91px] sm:px-[66px] flex flex-col items-center bg-white">
       <Image
         src="/signCheckMark.svg"
         width={160}

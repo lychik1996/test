@@ -61,7 +61,7 @@ export default function Shopify() {
   }
 
   return (
-    <div className="sm:w-[480px] px-10 pt-4 sm:py-16 rounded-lg shadow-signR bg-white">
+    <div className="sm:w-[480px] px-10 pt-4 sm:py-16 sm:rounded-lg sm:shadow-signR bg-white">
       <SignHeader
         header={
           isShopifyUse ? 'Connect your Shopify store' : 'Don`t use Shopify?'

@@ -22,6 +22,10 @@ const navArr = [
   },
 ];
 
+type PathName = typeof navArr[number]['pathName'];
+
+
+
 export default function NavParams() {
   const path = usePathname();
   const route = useRouter();
@@ -46,52 +50,61 @@ export default function NavParams() {
       route.push('/');
     }
   };
+  const checkConditions: Record<PathName, boolean> = {
+    '/sign': createAccount,
+    '/shopify': connectStore,
+    '/supportEmail': connectGmailAccount,
+    '/': false, 
+  };
   return (
-    <div className="flex flex-col w-[364px] h-[353px] mb-[172px]">
+    <div className="flex flex-col w-[364px] h-[353px] pt-12">
       <div className="h-full flex flex-col gap-[43px] mb-[43px]">
-        {navArr.map((item, i) => (
+        {navArr.map((item, i) =>{
+        const isActive = path === item.pathName;
+        const isCompleted = checkConditions[item.pathName];
+        const isCurrentSignWithStore = path === '/sign' && connectStore && item.pathName === '/shopify';
+        const isCurrentOrNextSignWithGmail = (path === '/sign' || path === '/shopify') && connectGmailAccount && item.pathName === '/supportEmail';
+        return(
           <div key={i} className="flex flex-row items-center font-medium">
             <div className="flex flex-row items-end">
               <div
                 className={clsx(
-                  'rounded-full size-8 border-2 flex justify-center items-center z-10 relative',
-                  path === item.pathName
+                  'rounded-full size-8 border-2 flex justify-center items-center relative z-10 box-border',
+                  isActive
                     ? 'border-chadBlue0'
                     : 'border-darkBlue60',
-                  item.pathName === '/sign' &&
-                    createAccount &&
-                    'bg-chadBlue0 border-none'
+                  isCompleted && 'bg-chadBlue0 border-none',
+                  (isCurrentSignWithStore || isCurrentOrNextSignWithGmail) && 'bg-darkBlue60'
                 )}
               >
-                {item.pathName === '/sign' && createAccount && (
-                  <Check className={clsx('text-white size-4')} />
-                )}
-                {item.pathName === path &&
-                  item.pathName === '/sign' &&
-                  createAccount && (
-                    <div className="size-[42px] rounded-full border-2 border-chadBlue0 absolute"></div>
+                {isCompleted && <Check className="text-white size-4" />}
+
+                {isActive && isCompleted && (
+                    <div className="size-[42px] rounded-full border-2 border-chadBlue0 absolute z-10"></div>
                   )}
+                <div
+                  className={clsx(
+                    'w-12 h-[1px] absolute -bottom-[1px] left-[15px] z-0',
+                    isCompleted ? 'bg-chadBlue0' : 'bg-darkBlue60',
+                    isActive && isCompleted && '-bottom-[5px]',
+                    (isCurrentSignWithStore || isCurrentOrNextSignWithGmail) && 'bg-darkBlue60'
+                  )}
+                ></div>
               </div>
-              <div
-                className={clsx(
-                  'w-12 h-[2px] -ml-5 ',
-                  item.pathName === '/sign' && createAccount
-                    ? 'bg-chadBlue0'
-                    : 'bg-darkBlue60'
-                )}
-              ></div>
             </div>
             <p
               className={clsx(
-                'text-darkBlue60 -ml-5',
+                'text-darkBlue60 ml-5',
                 path === item.pathName && 'text-white',
-                item.pathName === '/sign' && createAccount && 'text-white'
+                item.pathName === '/sign' && createAccount && 'text-white',
+                item.pathName === '/shopify' && connectStore && path !=='/sign' && 'text-white'
+
               )}
             >
               {item.text}
             </p>
           </div>
-        ))}
+        )})}
       </div>
       <div
         className={clsx(

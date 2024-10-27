@@ -34,7 +34,7 @@ export default function ShopifyConnected({
   };
 
   return (
-    <div className=" w-full sm:w-[479px] shadow-signR px-8 pt-[108px] sm:py-[126px] sm:px-[66px] flex flex-col items-center bg-white">
+    <div className=" w-full sm:w-[479px] sm:rounded-lg sm:shadow-signR px-8 pt-[108px] sm:py-[126px] sm:px-[66px] flex flex-col items-center bg-white">
       <div className="relative size-fit">
         <Image
           src="/shopifyConnected.svg"

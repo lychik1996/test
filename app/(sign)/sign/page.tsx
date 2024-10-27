@@ -107,7 +107,7 @@ export default function Sign() {
   }, [setAlreadyVisitedConnectionStore,storeName, connectStore,formData,userInfo,createAccount,setAddStoreName]);
   
   return (
-    <div className="sm:w-[480px] px-10 pt-4 sm:py-16 rounded-lg shadow-signR bg-white">
+    <div className="sm:w-[480px] px-10 pt-4 sm:py-16 sm:rounded-lg sm:shadow-signR bg-white">
       <SignHeader
         header="Welcome to Chad"
         info="Go live in 10 minutes! Our self-service widget empowers your customers to manage orders and track shipments 24/7 without driving you crazy."
