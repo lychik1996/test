@@ -24,11 +24,12 @@ export default function ShopifyUse({
   setIsConnectedStore:Function;
   setNewStoreName:Function;
 }) {
-  const { setConnectStore} = useSignUserInfo();
+  const { setConnectStore,setAddStoreName,userInfo} = useSignUserInfo();
 
   const handleConnectStore = () => {
     setConnectStore();
-    setNewStoreName('shopify');
+    setNewStoreName(userInfo.name);
+    setAddStoreName(userInfo.name);
     setIsConnectedStore(true);
   };
   return (

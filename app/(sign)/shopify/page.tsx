@@ -13,6 +13,7 @@ export default function Shopify() {
     connectStore,
     userInfo,
     storeName,
+    alreadyVisitedConnectionStore
   } = useSignUserInfo();
   const [isShopifyUse, setIsShopifyUse] = useState(true);
   const [isAnotherStore, setIsAnotherStore] = useState(false);
@@ -46,14 +47,13 @@ export default function Shopify() {
     return (
       <ShopifyConnected
         header={
-          storeName === 'shopify'
+          connectStore &&  alreadyVisitedConnectionStore
             ? `[STORE-${storeName}] already connected`
             : 'Store Connected'
         }
         setIsConnectedStore={setIsConnectedStore}
-        setNewStoreName={setNewStoreName}
         text={
-          storeName !== 'shopify' &&
+          connectStore && !alreadyVisitedConnectionStore &&
           `Chad is now able to manage customer support requests for [store- ${newStoreName}].`
         }
       />

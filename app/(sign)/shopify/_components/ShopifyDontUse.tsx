@@ -10,15 +10,16 @@ export default function ShopifyDontUse({
   handleClickShopifyUse: () => void;
   setIsAnotherStore: Function;
 }) {
-  const { setAlreadyVisitedConnectionStore, setConnectStore, setAddStoreName } =
+  const {setDisconnectStore, setUseAnotherStore,setRemoveStoreName,setClearAlreadyVisitedConnectionStore} =
     useSignUserInfo();
   const [anotherStoreName, setAnotherStoreName] = useState('');
   const handleSubmitAnotherStore = () => {
     if (anotherStoreName.length>0) {
-      setConnectStore();
+      setClearAlreadyVisitedConnectionStore();
+      setRemoveStoreName();
+      setDisconnectStore();
+      setUseAnotherStore();
       setIsAnotherStore(true);
-      setAlreadyVisitedConnectionStore();
-      setAddStoreName(anotherStoreName);
     }
   };
   return (

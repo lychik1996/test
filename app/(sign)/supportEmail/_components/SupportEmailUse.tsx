@@ -18,10 +18,11 @@ const arrParametrsShopify = [
   },
 ];
 export default function SupportEmailUse({handleClickGmailUse}:{handleClickGmailUse:()=>void}) {
-  const {setDisconnectGmailAccount, setConnectGmailAccount}=useSignUserInfo();
+  const {setAddEmailAccountName,userInfo, setConnectGmailAccount}=useSignUserInfo();
   const router = useRouter();
   const handleConnectGmailAccount = ()=>{
     setConnectGmailAccount();
+    setAddEmailAccountName(userInfo.email);
     router.push('/');
   };
   

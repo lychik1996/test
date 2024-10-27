@@ -18,10 +18,12 @@ interface useSignUserInfoProps {
 
   connectStore:boolean;
   storeName:string;
+  anotherStore:boolean;
   setConnectStore:()=>void;
   setDisconnectStore:()=>void;
   setAddStoreName:(newStoreName:string)=>void;
   setRemoveStoreName:()=>void;
+  setUseAnotherStore:()=>void;
   
   
   alreadyVisitedConnectionStore:boolean;
@@ -31,10 +33,12 @@ interface useSignUserInfoProps {
 
   connectGmailAccount:boolean;
   emailAccountName:string;
+  anotherEmailAccount:boolean,
   setConnectGmailAccount:()=>void;
   setDisconnectGmailAccount:()=>void;
   setAddEmailAccountName:(newAccountName:string)=>void;
   setRemoveEmailAccountName:()=>void;
+  setUseAnotherEmailAccount:()=>void;
   
 }
 
@@ -56,10 +60,12 @@ export const useSignUserInfo = create<useSignUserInfoProps>((set) => ({
 
   connectStore:false,
   storeName:'',
+  anotherStore:false,
   setConnectStore:()=>set({connectStore:true}),
   setDisconnectStore:()=>set({connectStore:false}),
   setAddStoreName:(newStoreName)=>set({storeName:newStoreName}),
   setRemoveStoreName:()=>set({storeName:''}),
+  setUseAnotherStore:()=>set({anotherStore:true}),
   
 
   alreadyVisitedConnectionStore:false,
@@ -69,8 +75,10 @@ export const useSignUserInfo = create<useSignUserInfoProps>((set) => ({
 
   connectGmailAccount:false,
   emailAccountName:'',
+  anotherEmailAccount:false,
   setConnectGmailAccount:()=>set({connectGmailAccount:true}),
   setDisconnectGmailAccount:()=>set({connectGmailAccount:false}),
   setAddEmailAccountName:(newEmailAccountName)=>set({emailAccountName:newEmailAccountName}),
-  setRemoveEmailAccountName:()=>set({emailAccountName:''})
+  setRemoveEmailAccountName:()=>set({emailAccountName:''}),
+  setUseAnotherEmailAccount:()=>set({anotherEmailAccount:true}),
 }));

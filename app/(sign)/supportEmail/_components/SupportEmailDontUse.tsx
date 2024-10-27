@@ -10,15 +10,16 @@ export default function SupportEmailDontUse({
   handleClickGmailUse: () => void;
   setIsAnotherEmail: Function;
 }) {
-  const { setConnectGmailAccount,setAddEmailAccountName } = useSignUserInfo();
+  const { setRemoveEmailAccountName,setDisconnectGmailAccount,setUseAnotherEmailAccount} = useSignUserInfo();
   const [anotherEmailName,setAnotherEmailName]= useState('');
   const handleisAnotherConnectionEmail = () => {
     if(anotherEmailName.length>0){
-    setConnectGmailAccount();
+    setRemoveEmailAccountName();
     setIsAnotherEmail(true);
-    setAddEmailAccountName(anotherEmailName);
+    setDisconnectGmailAccount();
+    setUseAnotherEmailAccount();
+    setIsAnotherEmail(true);
     }
-    
   };
   return (
     <>

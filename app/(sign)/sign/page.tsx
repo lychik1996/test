@@ -41,7 +41,7 @@ export default function Sign() {
     setClearAlreadyVisitedConnectionStore,
     setDisconnectGmailAccount,
     setRemoveEmailAccountName,
-    setRemoveStoreName
+    setRemoveStoreName,
   } = useSignUserInfo();
   
   const router = useRouter();

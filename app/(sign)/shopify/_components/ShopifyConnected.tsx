@@ -3,32 +3,29 @@ import { Button } from '@mui/material';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 export default function ShopifyConnected({
   header,
   text,
-  setNewStoreName,
+  
   setIsConnectedStore,
 }: {
   header: string;
   text: string | boolean;
   setIsConnectedStore:Function;
-  setNewStoreName:Function;
+  
 }) {
   const {
     setAlreadyVisitedConnectionStore,
-    setAddStoreName
+    setDisconnectStore
   } = useSignUserInfo();
   const router = useRouter();
   const handleDisconnectStore = () => {
-    setAddStoreName('shopify');
-    setNewStoreName('shopify');
+    setDisconnectStore();
     setIsConnectedStore(false);
   };
 
   const handlePushSupportEmail = () => {
-    setAddStoreName('shopify');
     setAlreadyVisitedConnectionStore();
     router.push('/supportEmail');
   };

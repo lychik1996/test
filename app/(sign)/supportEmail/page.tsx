@@ -10,16 +10,22 @@ import { useSignUserInfo } from '@/store/use-SignUserInfo';
 
 export default function SupportEmail() {
   const [isGmailUse, setIsGmailUse] = useState(true);
-  const { userInfo,setAddStoreName } = useSignUserInfo();
+  const { userInfo,setAddStoreName,connectGmailAccount,connectStore,setAlreadyVisitedConnectionStore } = useSignUserInfo();
   const [isAnotherEmail, setIsAnotherEmail] = useState(false);
   const router = useRouter();
-
+  const [isNextHref, setIsNextHref] = useState(false);
   useEffect(() => {
     if (userInfo.email === '') {
       router.push('/sign');
     }
-    setAddStoreName('shopify')
-  }, [userInfo, router,setAddStoreName]);
+    if (connectGmailAccount) {
+      setIsNextHref(true);
+    }
+    if(connectStore){
+      setAlreadyVisitedConnectionStore()
+    }
+    // setAddStoreName('shopify')
+  }, [userInfo, router,setAddStoreName, connectGmailAccount,connectStore,setAlreadyVisitedConnectionStore]);
 
   const handleClickGmailUse = () => setIsGmailUse((prev) => !prev);
   
@@ -47,6 +53,7 @@ export default function SupportEmail() {
         }
         step={3}
         prevHref="shopify"
+        {...isNextHref && {nextHref:'/'}}
       />
       {isGmailUse ? (
         <SupportEmailUse handleClickGmailUse={handleClickGmailUse} />
