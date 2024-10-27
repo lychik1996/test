@@ -6,24 +6,33 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function ShopifyConnected({
-    header,
-    text
-}:{
-    header:string,
-    text:string | boolean,
+  header,
+  text,
+  setNewStoreName,
+  setIsConnectedStore,
+}: {
+  header: string;
+  text: string | boolean;
+  setIsConnectedStore:Function;
+  setNewStoreName:Function;
 }) {
-  const {setDisconnectStore, setAlreadyVisitedConnectionStore,setClearAlreadyVisitedConnectionStore,} = useSignUserInfo();
+  const {
+    setAlreadyVisitedConnectionStore,
+    setAddStoreName
+  } = useSignUserInfo();
   const router = useRouter();
-  const handleDisconnectStore = ()=>{
-    setClearAlreadyVisitedConnectionStore();
-    setDisconnectStore();
-  }
-  
-  const handlePushSupportEmail=()=>{
+  const handleDisconnectStore = () => {
+    setAddStoreName('shopify');
+    setNewStoreName('shopify');
+    setIsConnectedStore(false);
+  };
+
+  const handlePushSupportEmail = () => {
+    setAddStoreName('shopify');
     setAlreadyVisitedConnectionStore();
     router.push('/supportEmail');
-  }
-  
+  };
+
   return (
     <div className=" w-full sm:w-[479px] shadow-signR px-8 pt-[108px] sm:py-[126px] sm:px-[66px] flex flex-col items-center bg-white">
       <div className="relative size-fit">
@@ -42,11 +51,19 @@ export default function ShopifyConnected({
           alt="ShopifyCheck"
         />
       </div>
-      <h1 className={clsx(
-        'text-darkBlue20 text-base sm:text-xl font-semibold mb-2  text-center mt-8',
-        !text && 'sm:max-w-[190px]'
-      )}>{header}</h1>
-       {text && <p className='max-w-[347px] text-center text-shade40 text-sm mb-[13.5px]'>{text}</p>}
+      <h1
+        className={clsx(
+          'text-darkBlue20 text-base sm:text-xl font-semibold mb-2  text-center mt-8',
+          !text && 'sm:max-w-[190px]'
+        )}
+      >
+        {header}
+      </h1>
+      {text && (
+        <p className="max-w-[347px] text-center text-shade40 text-sm mb-[13.5px]">
+          {text}
+        </p>
+      )}
       <Button
         variant="contained"
         disableElevation
@@ -57,7 +74,10 @@ export default function ShopifyConnected({
       </Button>
       <div className="text-shade40 text-xs flex items-center justify-center gap-1">
         Not your store?{' '}
-        <div className="text-chadBlue cursor-pointer" onClick={handleDisconnectStore}>
+        <div
+          className="text-chadBlue cursor-pointer"
+          onClick={handleDisconnectStore}
+        >
           Connecting another one
         </div>
       </div>

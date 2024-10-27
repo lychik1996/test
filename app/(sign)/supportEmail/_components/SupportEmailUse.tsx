@@ -2,6 +2,7 @@ import SignParamsShopifyEmail from '@/components/SignParamsShopifyEmail';
 import { useSignUserInfo } from '@/store/use-SignUserInfo';
 import { Button } from '@mui/material';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 const arrParametrsShopify = [
   {
     header: 'Contextual responses',
@@ -17,10 +18,13 @@ const arrParametrsShopify = [
   },
 ];
 export default function SupportEmailUse({handleClickGmailUse}:{handleClickGmailUse:()=>void}) {
-  const {setDisconnectGmailAccount}=useSignUserInfo();
+  const {setDisconnectGmailAccount, setConnectGmailAccount}=useSignUserInfo();
+  const router = useRouter();
   const handleConnectGmailAccount = ()=>{
-    setDisconnectGmailAccount();
-  }
+    setConnectGmailAccount();
+    router.push('/');
+  };
+  
   return (
     <>
       <div className="flex flex-col gap-4 mb-8">
@@ -49,7 +53,7 @@ export default function SupportEmailUse({handleClickGmailUse}:{handleClickGmailU
       </Button>
       <div className='w-full flex justify-center'>
         <div className ='text-shade40 text-xs text-center cursor-pointer' onClick={handleClickGmailUse}>
-        I don&apos;t use Gmail
+        I don`t use Gmail
         </div>
         
       </div>

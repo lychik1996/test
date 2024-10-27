@@ -26,7 +26,7 @@ const arrSlider = [
 ];
 export default function NavSlider() {
   const [count, setCount] = useState(0);
-  const [skipAnimation,setSkipAnimation]=useState(false);
+  const [skipAnimation, setSkipAnimation] = useState(false);
   useEffect(() => {
     let intervalTime = count === arrSlider.length ? 700 : 3000;
 
@@ -37,7 +37,7 @@ export default function NavSlider() {
           setSkipAnimation(true);
           return 0;
         }
-        return prevCount + 1
+        return prevCount + 1;
       });
     }, intervalTime);
 
@@ -46,10 +46,13 @@ export default function NavSlider() {
   return (
     <div className="w-[364px] flex flex-col items-center gap-4">
       <div className="w-full overflow-hidden relative h-[92px]">
-        <div  className={clsx(
-          "flex flex-row absolute gap-2 ",
-          !skipAnimation && 'transition-all duration-700 ease-in-out'
-        )} style={{transform: `translateX(${-count * 372}px)`}}>
+        <div
+          className={clsx(
+            'flex flex-row absolute gap-2 ',
+            !skipAnimation && 'transition-all duration-700 ease-in-out'
+          )}
+          style={{ transform: `translateX(${-count * 372}px)` }}
+        >
           {[...arrSlider, arrSlider[0]].map((item, i) => (
             <div
               key={i}
@@ -58,19 +61,21 @@ export default function NavSlider() {
               <h3 className="font-eudoxus text-[32px] font-bold text-chadBlue30">
                 {item.header}
               </h3>
-              <p className="text-sm text-chadBlue30" >
-                {item.text}
-              </p>
+              <p className="text-sm text-chadBlue30">{item.text}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className='flex flex-row justify-around gap-3'>
+      <div className="flex flex-row justify-around gap-3">
         {arrSlider.map((_, i) => (
-          <div key={i} className={clsx("size-2 rounded-full",
-            count%arrSlider.length===i? 'bg-chadBlue30':"bg-darkBlue20",
-          )}></div>
+          <div
+            key={i}
+            className={clsx(
+              'size-2 rounded-full',
+              count % arrSlider.length === i ? 'bg-chadBlue30' : 'bg-darkBlue20'
+            )}
+          ></div>
         ))}
       </div>
     </div>

@@ -3,20 +3,18 @@ import { Button } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-export default function SignResponse(
-    {
-        text,
-        href,
-    }:{
-        text:string
-        href:string
-    }
-) {
+export default function SignResponse({
+  text,
+  href,
+}: {
+  text: string;
+  href: string;
+}) {
   const router = useRouter();
-  
-  const handlePushHref = ()=>{
-      router.push(`/${href}`)
-  }
+
+  const handlePushHref = () => {
+    router.push(`/${href}`);
+  };
   return (
     <div className=" w-full sm:w-[479px] shadow-signR px-8 sm:pb-[126px] sm:pt-[91px] sm:px-[66px] flex flex-col items-center bg-white">
       <Image

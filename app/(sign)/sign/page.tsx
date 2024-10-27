@@ -24,52 +24,97 @@ const textSxParams = {
 
 export default function Sign() {
   const [showPassword, setShowPassword] = useState(false);
-  const {setUserInfo,userInfo,createAccount,connectStore,setChangesCreateAccount,setCreateAccount,setAlreadyVisitedSign,setClearAlreadyVisitedSign,setDisconnectStore,setAlreadyVisitedConnectionStore,setClearAlreadyVisitedConnectionStore,setDisconnectGmailAccount}=useSignUserInfo();
+  const [isNextHref,setIsNextHref] = useState(false);
+  const {
+    setUserInfo,
+    userInfo,
+    createAccount,
+    connectStore,
+    setAddStoreName,
+    storeName,
+    setChangesCreateAccount,
+    setCreateAccount,
+    setAlreadyVisitedSign,
+    setClearAlreadyVisitedSign,
+    setDisconnectStore,
+    setAlreadyVisitedConnectionStore,
+    setClearAlreadyVisitedConnectionStore,
+    setDisconnectGmailAccount,
+    setRemoveEmailAccountName,
+    setRemoveStoreName
+  } = useSignUserInfo();
+  
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: userInfo.email,
     name: userInfo.name,
     password: userInfo.password,
   });
-
+  
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleSubmit = (e:React.FormEvent)=>{
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setUserInfo(formData);
     setCreateAccount();
     setAlreadyVisitedSign();
+    setIsNextHref(true);
     router.push('/shopify');
-  }
-  const handleContinue = ()=>router.push('/shopify');
+  };
+  const handleContinue = () => router.push('/shopify');
 
-  useEffect(()=>{
-    if(formData.email !==userInfo.email || formData.name !==userInfo.name || formData.password !==userInfo.password){
+  useEffect(() => {
+    if (
+      formData.email !== userInfo.email ||
+      formData.name !== userInfo.name ||
+      formData.password !== userInfo.password
+    ) {
       setClearAlreadyVisitedSign();
       setClearAlreadyVisitedConnectionStore();
       setChangesCreateAccount();
       setDisconnectStore();
-      
+      setRemoveEmailAccountName();
+      setRemoveStoreName();
       setDisconnectGmailAccount();
-    } 
-  },[formData,userInfo, setClearAlreadyVisitedConnectionStore, setChangesCreateAccount, setDisconnectStore, setDisconnectGmailAccount, setClearAlreadyVisitedSign]);
-  useEffect(()=>{
-    if(connectStore){
-      setAlreadyVisitedConnectionStore();
+      setIsNextHref(false);
     }
-  },[setAlreadyVisitedConnectionStore,connectStore]);
+  }, [
+    formData,
+    userInfo,
+    setUserInfo,
+    setClearAlreadyVisitedConnectionStore,
+    setChangesCreateAccount,
+    setDisconnectStore,
+    setDisconnectGmailAccount,
+    setClearAlreadyVisitedSign,
+    setRemoveEmailAccountName,
+    setRemoveStoreName,
+  ]);
+
+  useEffect(() => {
+    if (connectStore) {
+      setAlreadyVisitedConnectionStore();
+      if (storeName === "") {
+        setAddStoreName('shopify');
+      }
+    }
+    const isEmail = formData.email.length>0 && userInfo.email===formData.email;
+    const isName = formData.name.length>0 && userInfo.name ===formData.name;
+    const isPass = formData.password.length>0 && userInfo.password===formData.password;
+    if( isEmail && isName && isPass && createAccount){
+      setIsNextHref(true);
+    }
+  }, [setAlreadyVisitedConnectionStore,storeName, connectStore,formData,userInfo,createAccount,setAddStoreName]);
+  
   return (
     <div className="sm:w-[480px] px-10 pt-4 sm:py-16 rounded-lg shadow-signR bg-white">
       <SignHeader
         header="Welcome to Chad"
         info="Go live in 10 minutes! Our self-service widget empowers your customers to manage orders and track shipments 24/7 without driving you crazy."
         step={1}
-        nextHref="shopify"
+        {...(isNextHref && { nextHref: 'shopify' })}
       />
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-6 mb-4"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6 mb-4">
         <label className="flex flex-col text-shade40 text-xs font-medium gap-2">
           Email
           <TextField
@@ -121,27 +166,28 @@ export default function Sign() {
             sx={textSxParams}
           />
         </label>
-        {!createAccount?<Button
-          type="submit"
-          variant="contained"
-          disableElevation
-          className="bg-blue-400 normal-case rounded-lg h-[43px]"
-        >
-          {' '}
-          Create account
-        </Button>:
-        <Button
-        onClick={handleContinue}
-        type="button"
-        variant="contained"
-        disableElevation
-        className="bg-blue-400 normal-case rounded-lg h-[43px]"
-      >
-        {' '}
-        Continue
-      </Button>
-        }
-        
+        {!createAccount ? (
+          <Button
+            type="submit"
+            variant="contained"
+            disableElevation
+            className="bg-blue-400 normal-case rounded-lg h-[43px]"
+          >
+            {' '}
+            Create account
+          </Button>
+        ) : (
+          <Button
+            onClick={handleContinue}
+            type="button"
+            variant="contained"
+            disableElevation
+            className="bg-blue-400 normal-case rounded-lg h-[43px]"
+          >
+            {' '}
+            Continue
+          </Button>
+        )}
       </form>
       <div className="text-shade40 text-xs flex items-center justify-center gap-1">
         Already have an account?{' '}

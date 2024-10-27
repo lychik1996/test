@@ -9,37 +9,59 @@ import { useSignUserInfo } from '@/store/use-SignUserInfo';
 import { useRouter } from 'next/navigation';
 
 export default function Shopify() {
-  const {connectStore,userInfo,alreadyVisitedConnectionStore,setDisconnectStore,setClearAlreadyVisitedConnectionStore}=useSignUserInfo();
+  const {
+    connectStore,
+    userInfo,
+    storeName,
+  } = useSignUserInfo();
   const [isShopifyUse, setIsShopifyUse] = useState(true);
   const [isAnotherStore, setIsAnotherStore] = useState(false);
+  const [isConnectedStore, setIsConnectedStore] = useState(false);
+  const [isNextHref, setIsNextHref] = useState(false);
+  const [newStoreName, setNewStoreName] = useState('');
   const router = useRouter();
 
-  useEffect(()=>{
-    if(userInfo.email===""){
-      router.push('/sign')
+  useEffect(() => {
+    if (userInfo.email === '') {
+      router.push('/sign');
     }
-  },[userInfo, router])
+    if (connectStore) {
+      setIsNextHref(true);
+    }
+  }, [userInfo, router, connectStore]);
+  
   const handleClickShopifyUse = () => {
     setIsShopifyUse((prev) => !prev);
-    setDisconnectStore();
-    setClearAlreadyVisitedConnectionStore();
+  };
+
+  if (isAnotherStore) {
+    return (
+      <SignResponse
+        text="Thank you for your interest in Chad! We`ll be hard at work building integrations to support your platform."
+        href="supportEmail"
+      />
+    );
   }
-  
-  if(isAnotherStore){
-    return <SignResponse
-    text='Thank you for your interest in Chad! We`ll be hard at work building integrations to support your platform.'
-    href='supportEmail'
-    />
-  }
-  if(connectStore){
-    return <ShopifyConnected 
-    header={alreadyVisitedConnectionStore?`[STORE-${userInfo.name}] already connected`:'Store Connected'}
-    text={!alreadyVisitedConnectionStore && `Chad is now able to manage customer support requests for [store- ${userInfo.name}].`}
-    />
+  if (isConnectedStore) {
+    return (
+      <ShopifyConnected
+        header={
+          storeName === 'shopify'
+            ? `[STORE-${storeName}] already connected`
+            : 'Store Connected'
+        }
+        setIsConnectedStore={setIsConnectedStore}
+        setNewStoreName={setNewStoreName}
+        text={
+          storeName !== 'shopify' &&
+          `Chad is now able to manage customer support requests for [store- ${newStoreName}].`
+        }
+      />
+    );
   }
 
   return (
-    <div className="sm:w-[480px] px-10 pt-4 sm:py-16 rounded-lg shadow-signR bg-white" >
+    <div className="sm:w-[480px] px-10 pt-4 sm:py-16 rounded-lg shadow-signR bg-white">
       <SignHeader
         header={
           isShopifyUse ? 'Connect your Shopify store' : 'Don`t use Shopify?'
@@ -51,10 +73,20 @@ export default function Shopify() {
         }
         step={2}
         prevHref="sign"
-        nextHref="supportEmail"
+        {...(isNextHref && { nextHref: 'supportEmail' })}
       />
-      {isShopifyUse?<ShopifyUse handleClickShopifyUse={handleClickShopifyUse}/> : <ShopifyDontUse setIsAnotherStore={setIsAnotherStore} handleClickShopifyUse={handleClickShopifyUse}/>}
-      
+      {isShopifyUse ? (
+        <ShopifyUse
+          setNewStoreName={setNewStoreName}
+          setIsConnectedStore={setIsConnectedStore}
+          handleClickShopifyUse={handleClickShopifyUse}
+        />
+      ) : (
+        <ShopifyDontUse
+          setIsAnotherStore={setIsAnotherStore}
+          handleClickShopifyUse={handleClickShopifyUse}
+        />
+      )}
     </div>
   );
 }

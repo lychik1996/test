@@ -1,12 +1,20 @@
 
+import { useSignUserInfo } from '@/store/use-SignUserInfo';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useState } from 'react';
 
 
-export default function SignSelect({platforms}:{platforms:string[]}) {
+export default function SignSelect({
+  platforms,
+  setAnotherName,
+}:{
+  platforms:string[],
+  setAnotherName:Function
+}) {
   const [platform, setPlatform] = useState('');
   const handleChange = (event: SelectChangeEvent) => {
+    setAnotherName(event.target.value);
     setPlatform(event.target.value);
   };
   return (
