@@ -9,23 +9,28 @@ import { useSignUserInfo } from '@/store/use-SignUserInfo';
 import { useRouter } from 'next/navigation';
 
 export default function Shopify() {
-  const {connectStore,userInfo,anotherStore,alreadyVisitedConnectionStore,setDisconnectStore,setDisconnectAnotherStore,setClearAlreadyVisitedConnectionStore}=useSignUserInfo();
+  const {connectStore,userInfo,alreadyVisitedConnectionStore,setDisconnectStore,setClearAlreadyVisitedConnectionStore}=useSignUserInfo();
   const [isShopifyUse, setIsShopifyUse] = useState(true);
+  const [isAnotherStore, setIsAnotherStore] = useState(false);
   const router = useRouter();
 
   useEffect(()=>{
     if(userInfo.email===""){
       router.push('/sign')
     }
-  },[userInfo])
+  },[userInfo, router])
   const handleClickShopifyUse = () => {
     setIsShopifyUse((prev) => !prev);
     setDisconnectStore();
-    setDisconnectAnotherStore();
     setClearAlreadyVisitedConnectionStore();
   }
   
-
+  if(isAnotherStore){
+    return <SignResponse
+    text='Thank you for your interest in Chad! We`ll be hard at work building integrations to support your platform.'
+    href='supportEmail'
+    />
+  }
   if(connectStore){
     return <ShopifyConnected 
     header={alreadyVisitedConnectionStore?`[STORE-${userInfo.name}] already connected`:'Store Connected'}
@@ -33,15 +38,6 @@ export default function Shopify() {
     />
   }
 
-  if(anotherStore && !connectStore){
-    return <SignResponse
-    text='Thank you for your interest in Chad! We`ll be hard at work building integrations to support your platform.'
-    href='supportEmail'
-    />
-  }
-  
-  
-  
   return (
     <div className="sm:w-[480px] px-10 pt-4 sm:py-16 rounded-lg shadow-signR bg-white" >
       <SignHeader
@@ -57,7 +53,7 @@ export default function Shopify() {
         prevHref="sign"
         nextHref="supportEmail"
       />
-      {isShopifyUse?<ShopifyUse handleClickShopifyUse={handleClickShopifyUse}/> : <ShopifyDontUse handleClickShopifyUse={handleClickShopifyUse}/>}
+      {isShopifyUse?<ShopifyUse handleClickShopifyUse={handleClickShopifyUse}/> : <ShopifyDontUse setIsAnotherStore={setIsAnotherStore} handleClickShopifyUse={handleClickShopifyUse}/>}
       
     </div>
   );

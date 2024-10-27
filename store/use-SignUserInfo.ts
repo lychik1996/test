@@ -17,11 +17,10 @@ interface useSignUserInfoProps {
   setClearAlreadyVisitedSign:()=>void;
 
   connectStore:boolean;
-  anotherStore:boolean;
+  
   setConnectStore:()=>void;
   setDisconnectStore:()=>void;
-  setConnectAnotherStore:()=>void;
-  setDisconnectAnotherStore:()=>void;
+  
   
   alreadyVisitedConnectionStore:boolean;
   setAlreadyVisitedConnectionStore:()=>void;
@@ -29,10 +28,9 @@ interface useSignUserInfoProps {
 
 
   connectGmailAccount:boolean;
-  anotherEmailAccount:boolean;
   setConnectGmailAccount:()=>void;
   setDisconnectGmailAccount:()=>void;
-  setConnectAnotherEmailAcoount:()=>void;
+  
 }
 
 export const useSignUserInfo = create<useSignUserInfoProps>((set) => ({
@@ -52,11 +50,10 @@ export const useSignUserInfo = create<useSignUserInfoProps>((set) => ({
   setClearAlreadyVisitedSign:()=>set({alreadyVisitedSign:false}),
 
   connectStore:false,
-  anotherStore:false,
+  
   setConnectStore:()=>set({connectStore:true}),
   setDisconnectStore:()=>set({connectStore:false}),
-  setConnectAnotherStore:()=>set({anotherStore:true}),
-  setDisconnectAnotherStore:()=>set({anotherStore:false}),
+  
 
   alreadyVisitedConnectionStore:false,
   setAlreadyVisitedConnectionStore:()=>set({alreadyVisitedConnectionStore:true}),
@@ -67,5 +64,4 @@ export const useSignUserInfo = create<useSignUserInfoProps>((set) => ({
   anotherEmailAccount:false,
   setConnectGmailAccount:()=>set({connectGmailAccount:true}),
   setDisconnectGmailAccount:()=>set({connectGmailAccount:false}),
-  setConnectAnotherEmailAcoount:()=>set({anotherEmailAccount:true}),
 }));

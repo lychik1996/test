@@ -13,11 +13,8 @@ export default function SignResponse(
     }
 ) {
   const router = useRouter();
-  const {setConnectStore,connectGmailAccount} = useSignUserInfo();
+  
   const handlePushHref = ()=>{
-      if(!connectGmailAccount){
-        setConnectStore()
-      }
       router.push(`/${href}`)
   }
   return (

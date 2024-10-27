@@ -24,7 +24,7 @@ const textSxParams = {
 
 export default function Sign() {
   const [showPassword, setShowPassword] = useState(false);
-  const {setUserInfo,userInfo,createAccount,connectStore,anotherStore,setChangesCreateAccount,setCreateAccount,setAlreadyVisitedSign,setClearAlreadyVisitedSign,setDisconnectStore,setAlreadyVisitedConnectionStore,setClearAlreadyVisitedConnectionStore,setDisconnectAnotherStore,setDisconnectGmailAccount}=useSignUserInfo();
+  const {setUserInfo,userInfo,createAccount,connectStore,setChangesCreateAccount,setCreateAccount,setAlreadyVisitedSign,setClearAlreadyVisitedSign,setDisconnectStore,setAlreadyVisitedConnectionStore,setClearAlreadyVisitedConnectionStore,setDisconnectGmailAccount}=useSignUserInfo();
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: userInfo.email,
@@ -49,15 +49,15 @@ export default function Sign() {
       setClearAlreadyVisitedConnectionStore();
       setChangesCreateAccount();
       setDisconnectStore();
-      setDisconnectAnotherStore();
+      
       setDisconnectGmailAccount();
     } 
-  },[formData,userInfo]);
+  },[formData,userInfo, setClearAlreadyVisitedConnectionStore, setChangesCreateAccount, setDisconnectStore, setDisconnectGmailAccount, setClearAlreadyVisitedSign]);
   useEffect(()=>{
-    if(connectStore || anotherStore){
+    if(connectStore){
       setAlreadyVisitedConnectionStore();
     }
-  },[setAlreadyVisitedConnectionStore, anotherStore,connectStore]);
+  },[setAlreadyVisitedConnectionStore,connectStore]);
   return (
     <div className="sm:w-[480px] px-10 pt-4 sm:py-16 rounded-lg shadow-signR bg-white">
       <SignHeader

@@ -2,10 +2,20 @@ import SignSelect from '@/components/SignSelect';
 import { useSignUserInfo } from '@/store/use-SignUserInfo';
 import { Button } from '@mui/material';
 const platforms = ['one', 'two', 'three', 'four', 'five'];
-export default function ShopifyDontUse({handleClickShopifyUse}:{handleClickShopifyUse:()=>void}) {
-  const {setConnectAnotherStore,setAlreadyVisitedConnectionStore}=useSignUserInfo();
+export default function ShopifyDontUse({
+  handleClickShopifyUse,
+  setIsAnotherStore
+}
+  :{
+    handleClickShopifyUse:()=>void,
+    setIsAnotherStore:Function
+  },
+    
+  ) {
+  const {setAlreadyVisitedConnectionStore,setConnectStore}=useSignUserInfo();
   const handleSubmitAnotherStore=()=>{
-    setConnectAnotherStore();
+    setConnectStore();
+    setIsAnotherStore(true);
     setAlreadyVisitedConnectionStore();
   }
   return (
