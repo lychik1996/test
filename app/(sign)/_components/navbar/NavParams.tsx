@@ -18,7 +18,7 @@ const navArr = [
 
 export default function NavParams() {
   return (
-    <div className="flex flex-col  max-w-[364px]">
+    <div className="flex flex-col w-[364px] h-[353px] mb-[172px]">
       <div className="h-full flex flex-col gap-[43px] mb-[43px]">
         {navArr.map((item, i) => (
           <div key={i} className="flex flex-row items-center font-medium ">
@@ -40,7 +40,7 @@ export default function NavParams() {
           </div>
         ))}
       </div>
-      <div className='flex flex-row justify-between  cursor-pointer'>
+      <div className='flex flex-row justify-between cursor-pointer'>
         <div className={clsx(
             'flex flex-row items-center gap-2 text-darkBlue60 cursor-pointer px-3 py-[6px]'
         )}>

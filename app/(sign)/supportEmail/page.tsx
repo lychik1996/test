@@ -2,14 +2,35 @@
 import SignHeader from '@/components/SignHeader';
 
 import SupportEmailUse from './_components/SupportEmailUse';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SupportEmailDontUse from './_components/SupportEmailDontUse';
+import SignResponse from '@/components/SignResponse';
+import { useRouter } from 'next/navigation';
+import { useSignUserInfo } from '@/store/use-SignUserInfo';
 
 export default function SupportEmail() {
   const [isGmailUse, setIsGmailUse] = useState(true);
+
+  const {userInfo}=useSignUserInfo();
+  
+  const router = useRouter();
+
+  useEffect(()=>{
+    if(userInfo.email===""){
+      router.push('/sign')
+    }
+  },[userInfo]);
+
   const handleClickGmailUse = () => setIsGmailUse((prev) => !prev);
+  if(false){
+    return <SignResponse
+    text='Thank you for your interest in Chad! We`ll be hard at work building integrations to support your email client.'
+    href='/'
+    />
+  }
+  
   return (
-    <div className="sm:w-[380px] md:w-[480px] px-10 pt-4 sm:py-16">
+    <div className="sm:w-[480px] px-10 pt-4 sm:py-16 rounded-lg shadow-signR bg-white" >
       <SignHeader
         header={
           isGmailUse
@@ -25,9 +46,9 @@ export default function SupportEmail() {
         prevHref="shopify"
       />
       {isGmailUse ? (
-        <SupportEmailUse handleClick={handleClickGmailUse} />
+        <SupportEmailUse handleClickGmailUse={handleClickGmailUse} />
       ) : (
-        <SupportEmailDontUse handleClick={handleClickGmailUse} />
+        <SupportEmailDontUse handleClickGmailUse={handleClickGmailUse} />
       )}
     </div>
   );

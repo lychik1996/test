@@ -1,0 +1,15 @@
+<svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<clipPath id="clip2499_48797">
+			<rect id="icon:check" rx="-0.302198" width="13.901099" height="13.901099" transform="translate(5.049512 5.049512)" fill="white" fill-opacity="0"/>
+		</clipPath>
+	</defs>
+	<rect id="Progress" rx="11.546703" width="23.093407" height="23.093407" transform="translate(0.453297 0.453297)" fill="#65BD47" fill-opacity="1.000000"/>
+	<rect id="icon:check" rx="-0.302198" width="13.901099" height="13.901099" transform="translate(5.049512 5.049512)" fill="#FFFFFF" fill-opacity="0"/>
+	<g clip-path="url(#clip2499_48797)">
+		<path id="Vector" d="M16.83 8.37L10.18 15.02L7.16 12" stroke="#FFFFFF" stroke-opacity="1.000000" stroke-width="1.813187" stroke-linejoin="round" stroke-linecap="round"/>
+	</g>
+</svg>

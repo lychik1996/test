@@ -44,7 +44,7 @@ export default function NavSlider() {
     return () => clearTimeout(timer);
   }, [count]);
   return (
-    <div className="w-[364px] hidden lg:flex flex-col items-center gap-4">
+    <div className="w-[364px] flex flex-col items-center gap-4">
       <div className="w-full overflow-hidden relative h-[92px]">
         <div  className={clsx(
           "flex flex-row absolute gap-2 ",

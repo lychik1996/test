@@ -2,9 +2,9 @@ import SignSelect from '@/components/SignSelect';
 import { Button } from '@mui/material';
 const platforms = ['one', 'two', 'three', 'four', 'five'];
 export default function SupportEmailDontUse({
-  handleClick,
+  handleClickGmailUse,
 }: {
-  handleClick: () => void;
+  handleClickGmailUse: () => void;
 }) {
   return (
     <>
@@ -21,7 +21,7 @@ export default function SupportEmailDontUse({
       </Button>
       <div className="w-full text-shade40 text-xs flex justify-center gap-1">
         Actually use Gmail?{' '}
-        <span className="text-blue-500 cursor-pointer" onClick={handleClick}>
+        <span className="text-blue-500 cursor-pointer" onClick={handleClickGmailUse}>
           Connect
         </span>
       </div>

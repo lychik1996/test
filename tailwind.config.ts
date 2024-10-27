@@ -17,7 +17,8 @@ const config: Config = {
         darkBlue80:'rgb(147, 168, 193)',
         darkBlue20:'rgb(19, 66, 103)',
         shade40:'rgb(79, 99, 125)',
-        shade80:'rgb(195, 202, 213)'
+        shade80:'rgb(195, 202, 213)',
+        chadBlue:'rgb(50, 171, 242)'
       },
       backgroundColor:{
         darkBlue20:'rgb(19, 66, 103)',
@@ -32,6 +33,9 @@ const config: Config = {
         darkBlue95:'rgb(201, 211, 224)'
       }
     },
+    boxShadow:{
+      signR:'0px 5px 20px 0px rgba(108, 117, 139, 0.2)'
+    }
   },
   plugins: [],
 };

@@ -1,7 +1,13 @@
 import SignSelect from '@/components/SignSelect';
+import { useSignUserInfo } from '@/store/use-SignUserInfo';
 import { Button } from '@mui/material';
 const platforms = ['one', 'two', 'three', 'four', 'five'];
-export default function ShopifyDontUse({handleClick}:{handleClick:()=>void}) {
+export default function ShopifyDontUse({handleClickShopifyUse}:{handleClickShopifyUse:()=>void}) {
+  const {setConnectAnotherStore,setAlreadyVisitedConnectionStore}=useSignUserInfo();
+  const handleSubmitAnotherStore=()=>{
+    setConnectAnotherStore();
+    setAlreadyVisitedConnectionStore();
+  }
   return (
     <>
       <label className='flex flex-col gap-2 text-shade40 text-xs mb-8'>
@@ -9,6 +15,7 @@ export default function ShopifyDontUse({handleClick}:{handleClick:()=>void}) {
         <SignSelect platforms={platforms} />
       </label>
       <Button
+        onClick={handleSubmitAnotherStore}
         variant="contained"
         disableElevation
         className="bg-blue-400 normal-case rounded-lg h-[43px] w-full mb-4"
@@ -16,7 +23,7 @@ export default function ShopifyDontUse({handleClick}:{handleClick:()=>void}) {
         Submit
       </Button>
       <div className="w-full text-shade40 text-xs flex justify-center gap-1">
-            Actually use Shopify? <span className="text-blue-500 cursor-pointer" onClick={handleClick}>Connect</span>
+            Actually use Shopify? <span className="text-blue-500 cursor-pointer" onClick={handleClickShopifyUse}>Connect</span>
       </div>
     </>
   );

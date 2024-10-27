@@ -1,4 +1,5 @@
 import SignParamsShopifyEmail from "@/components/SignParamsShopifyEmail";
+import { useSignUserInfo } from "@/store/use-SignUserInfo";
 import { Button } from "@mui/material";
 const arrParametrsShopify = [
     {
@@ -14,7 +15,11 @@ const arrParametrsShopify = [
       info: 'Automatically checks your store policy and existing inventory before resolving or escalating each request',
     },
   ];
-export default function ShopifyUse({handleClick}:{handleClick:()=>void}){
+export default function ShopifyUse({handleClickShopifyUse}:{handleClickShopifyUse:()=>void}){
+  const {setConnectStore}=useSignUserInfo();
+  const handleConnectStore = ()=>{
+    setConnectStore();
+  }
     return(
         <>
         <div className="flex flex-col gap-4 mb-8">
@@ -27,6 +32,7 @@ export default function ShopifyUse({handleClick}:{handleClick:()=>void}){
         ))}
       </div>
       <Button
+      onClick={handleConnectStore}
         variant="contained"
         disableElevation
         className="bg-blue-400 normal-case rounded-lg h-[43px] w-full mb-4"
@@ -34,7 +40,7 @@ export default function ShopifyUse({handleClick}:{handleClick:()=>void}){
         Connect store
       </Button>
       <div className='w-full flex justify-center'>
-        <div className ='text-shade40 text-xs text-center cursor-pointer' onClick={handleClick}>
+        <div className ='text-shade40 text-xs text-center cursor-pointer' onClick={handleClickShopifyUse}>
         I don&apos;t use Shopify
         </div>
         

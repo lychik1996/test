@@ -1,4 +1,5 @@
 import SignParamsShopifyEmail from '@/components/SignParamsShopifyEmail';
+import { useSignUserInfo } from '@/store/use-SignUserInfo';
 import { Button } from '@mui/material';
 import Image from 'next/image';
 const arrParametrsShopify = [
@@ -15,7 +16,11 @@ const arrParametrsShopify = [
     info: 'Tags your emails by category so you know what to expect before even opening an email',
   },
 ];
-export default function SupportEmailUse({handleClick}:{handleClick:()=>void}) {
+export default function SupportEmailUse({handleClickGmailUse}:{handleClickGmailUse:()=>void}) {
+  const {setDisconnectGmailAccount}=useSignUserInfo();
+  const handleConnectGmailAccount = ()=>{
+    setDisconnectGmailAccount();
+  }
   return (
     <>
       <div className="flex flex-col gap-4 mb-8">
@@ -28,6 +33,7 @@ export default function SupportEmailUse({handleClick}:{handleClick:()=>void}) {
         ))}
       </div>
       <Button
+      onClick={handleConnectGmailAccount}
         variant="contained"
         disableElevation
         className="bg-blue-400 normal-case  h-[50px] w-full mb-4 relative text-sm"
@@ -42,7 +48,7 @@ export default function SupportEmailUse({handleClick}:{handleClick:()=>void}) {
         Connect Gmail account
       </Button>
       <div className='w-full flex justify-center'>
-        <div className ='text-shade40 text-xs text-center cursor-pointer' onClick={handleClick}>
+        <div className ='text-shade40 text-xs text-center cursor-pointer' onClick={handleClickGmailUse}>
         I don&apos;t use Gmail
         </div>
         
