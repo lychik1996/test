@@ -24,7 +24,7 @@ const textSxParams = {
 
 export default function Sign() {
   const [showPassword, setShowPassword] = useState(false);
-  const {setUserInfo,userInfo,createAccount,setChangesCreateAccount,setCreateAccount,setAlreadyVisitedSign,setClearAlreadyVisitedSign,setDisconnectStore,setClearAlreadyVisitedConnectionStore,setDisconnectAnotherStore,setDisconnectGmailAccount}=useSignUserInfo();
+  const {setUserInfo,userInfo,createAccount,connectStore,anotherStore,setChangesCreateAccount,setCreateAccount,setAlreadyVisitedSign,setClearAlreadyVisitedSign,setDisconnectStore,setAlreadyVisitedConnectionStore,setClearAlreadyVisitedConnectionStore,setDisconnectAnotherStore,setDisconnectGmailAccount}=useSignUserInfo();
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: userInfo.email,
@@ -53,6 +53,11 @@ export default function Sign() {
       setDisconnectGmailAccount();
     } 
   },[formData,userInfo]);
+  useEffect(()=>{
+    if(connectStore || anotherStore){
+      setAlreadyVisitedConnectionStore();
+    }
+  },[setAlreadyVisitedConnectionStore, anotherStore,connectStore]);
   return (
     <div className="sm:w-[480px] px-10 pt-4 sm:py-16 rounded-lg shadow-signR bg-white">
       <SignHeader

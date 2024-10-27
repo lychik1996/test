@@ -12,12 +12,14 @@ export default function ShopifyConnected({
     header:string,
     text:string | boolean,
 }) {
-  const {setDisconnectStore, setAlreadyVisitedConnectionStore,setClearAlreadyVisitedConnectionStore} = useSignUserInfo();
+  const {setDisconnectStore, setAlreadyVisitedConnectionStore,setClearAlreadyVisitedConnectionStore,setDisconnectAnotherStore} = useSignUserInfo();
   const router = useRouter();
   const handleDisconnectStore = ()=>{
     setClearAlreadyVisitedConnectionStore();
     setDisconnectStore();
+    setDisconnectAnotherStore();
   }
+  
   const handlePushSupportEmail=()=>{
     setAlreadyVisitedConnectionStore();
     router.push('/supportEmail');
