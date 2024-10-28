@@ -1,9 +1,6 @@
-import path from 'path';
-import { promises as fs } from 'fs';
-import { User } from '@/fakebase/interface';
+import { prisma } from "@/lib/prisma";
 
 
-const usersFilePath = path.join(process.cwd(), 'fakebase', 'users.json');
 export const POST=async(req: Request)=>{
   const { email, password} = await req.json();
   if (!email || !password) {
@@ -15,19 +12,22 @@ export const POST=async(req: Request)=>{
     );
   }
   try {
-    const data = await fs.readFile(usersFilePath, 'utf-8');
-    const users: User[] = JSON.parse(data);
-    const isEmail = users.find((us) => us.email === email);
-    if (!isEmail) {
+    
+    const user = await prisma.user.findUnique({
+      where: { email: email }
+    });
+    
+    if (!user) {
       return new Response(
-        JSON.stringify({ message: 'Email is not valid' }),
+        JSON.stringify({ message: "User with this email does not exist" }),
         {
-          status: 400,
+          status: 404,
         }
       );
     }
-    const isPassword = users.find((us)=>us.email ===email && us.password ===password)
-    if (!isPassword) {
+    const isPassWord = user.password ===password;
+    
+    if (!isPassWord) {
       return new Response(
         JSON.stringify({ message: 'This password is not valid' }),
         {
@@ -35,7 +35,7 @@ export const POST=async(req: Request)=>{
         }
       );
     };
-    const user = users.find((us)=>us.email===email);
+    
     
     return new Response(
       JSON.stringify({ message: 'User signIn successfully',user}),

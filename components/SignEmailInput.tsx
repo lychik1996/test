@@ -27,11 +27,11 @@ export default function SignEmailInput({
   sign: 'signUp' | 'signIn';
 }) {
   const validEmail = useDebounce(formData.email, 500);
+  
   useEffect(() => {
     const checkEmail = async () => {
       await axios
         .post('/api/auth/checkEmail', { email: validEmail })
-        .then()
         .catch(() => toast.error('This email adress already exist'));
     };
     const isValidEmail = validEmail.includes('@') && validEmail.includes('.');

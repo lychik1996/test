@@ -1,5 +1,5 @@
 'use client';
-import { Button } from "@mui/material";
+
 import { useEffect, useState } from "react";
 
 
@@ -22,12 +22,10 @@ export default function MainInfo(){
         <div className="flex flex-col w-[200px] sm:w-[400px] p-4 rounded m-2 shadow-signR">
         {userName.length>0 && <h1 className="text-darkBlue20 text-base sm:text-xl font-semibold mb-2 font-eudoxus" >hello: {userName}</h1>}
         
-        <Button
+        <button
         onClick={handleLogout}
-          variant="contained"
-          disableElevation
-          className="bg-blue-400 normal-case rounded-lg h-[43px] w-full"
-        >{userName.length>0? 'LogOut':'Login'}</Button>
+          className="bg-blue-400 normal-case rounded-lg h-[43px] w-full text-white"
+        >{userName.length>0? 'LogOut':'Login'}</button>
         </div>
         </div>
     )

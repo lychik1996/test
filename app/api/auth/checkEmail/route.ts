@@ -1,11 +1,9 @@
-import path from 'path';
-import { promises as fs } from 'fs';
-import { User } from '@/fakebase/interface';
-const usersFilePath = path.join(process.cwd(), 'fakebase', 'users.json');
+import { prisma } from "@/lib/prisma";
+
+
 
 export const POST=async(req: Request)=>{
-  const { email} = await req.json();
-  
+  const {email} = await req.json();
   if (!email) {
     return new Response(
       JSON.stringify({ message: 'Failed to get email' }),
@@ -15,10 +13,9 @@ export const POST=async(req: Request)=>{
     );
   }
   try {
-    const data = await fs.readFile(usersFilePath, 'utf-8');
-    const users: User[] = JSON.parse(data);
-    const user = users.some((us) => us.email === email);
-    
+    const user = await prisma.user.findUnique({
+      where: { email: email }
+    });
     if(user){
         return new Response(JSON.stringify({message:'This email already exist'}),{status:400})
     }

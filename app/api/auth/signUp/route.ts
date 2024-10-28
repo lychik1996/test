@@ -1,9 +1,7 @@
-import { User } from '@/fakebase/interface';
-import path from 'path';
-import { promises as fs } from 'fs';
-import { v4 as uuidv4 } from 'uuid';
 
-const usersFilePath = path.join(process.cwd(), 'fakebase', 'users.json');
+import { prisma } from '@/lib/prisma';
+
+
 export const POST = async (req: Request) => {
   const {
     email,
@@ -24,24 +22,30 @@ export const POST = async (req: Request) => {
     );
   }
   try {
-    const data = await fs.readFile(usersFilePath, 'utf-8'); 
-    const users: User[] = JSON.parse(data);
-    const user: User = {
-      email: email,
-      name: name,
-      password: password,
-      connectStore: connectStore,
-      storeName: storeName,
-      connectGmailAccount: connectGmailAccount,
-      emailAccountName: emailAccountName,
-      id: uuidv4(),
-    };
-    
-    users.push(user);
-    await fs.writeFile(usersFilePath, JSON.stringify(users, null, 2), 'utf-8');
-    
+    const existingUser = await prisma.user.findUnique({
+      where: { email:email },
+    });
+
+    if (existingUser) {
+      return new Response(
+        JSON.stringify({ message: 'User with this email already exists' }),
+        { status: 409 }
+      );
+    }
+    const newUser = await prisma.user.create({
+      data:{
+        email,
+        name,
+        password,
+        connectStore,
+        storeName,
+        connectGmailAccount,
+        emailAccountName
+      }
+    })
+     
     return new Response(
-      JSON.stringify({ message: 'User registered successfully', user }),
+      JSON.stringify({ message: 'User registered successfully', newUser }),
       {
         status: 201,
       }
