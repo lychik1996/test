@@ -18,8 +18,8 @@ export default function SignReadyDesktop(
         const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
         const storeName = userInfo?.storeName && userInfo.storeName;
         const emailAccountName = userInfo?.emailAccountName && userInfo.emailAccountName;
-        storeName.length>0 && toast.success(`Shopify account connected ${storeName}`);
-        emailAccountName.length>0 && toast.success(`Customer support account connected ${emailAccountName}`);
+         storeName && storeName.length>0 && toast.success(`Shopify account connected ${storeName}`);
+        emailAccountName && emailAccountName.length>0 && toast.success(`Customer support account connected ${emailAccountName}`);
 
     },[])
   return (

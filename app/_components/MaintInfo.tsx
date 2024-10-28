@@ -20,13 +20,14 @@ export default function MainInfo(){
     return(
         <div className="flex justify-center w-full">
         <div className="flex flex-col w-[200px] sm:w-[400px] p-4 rounded m-2 shadow-signR">
-        <h1 className="text-darkBlue20 text-base sm:text-xl font-semibold mb-2 font-eudoxus" >hello: {userName}</h1>
+        {userName.length>0 && <h1 className="text-darkBlue20 text-base sm:text-xl font-semibold mb-2 font-eudoxus" >hello: {userName}</h1>}
+        
         <Button
         onClick={handleLogout}
           variant="contained"
           disableElevation
           className="bg-blue-400 normal-case rounded-lg h-[43px] w-full"
-        >LogOut</Button>
+        >{userName.length>0? 'LogOut':'Login'}</Button>
         </div>
         </div>
     )
