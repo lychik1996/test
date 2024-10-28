@@ -1,5 +1,5 @@
 import path from 'path';
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import { User } from '@/fakebase/interface';
 
 
@@ -15,7 +15,7 @@ export const POST=async(req: Request)=>{
     );
   }
   try {
-    const data = fs.readFileSync(usersFilePath, 'utf-8');
+    const data = await fs.readFile(usersFilePath, 'utf-8');
     const users: User[] = JSON.parse(data);
     const isEmail = users.find((us) => us.email === email);
     if (!isEmail) {

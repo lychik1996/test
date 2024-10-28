@@ -28,5 +28,35 @@
     "connectGmailAccount": true,
     "emailAccountName": "12@gmail.com",
     "id": "fbefb8d7-b115-4054-a72b-c32e86dae4a6"
+  },
+  {
+    "email": "1234@gmail.com",
+    "name": "1",
+    "password": "1",
+    "connectStore": true,
+    "storeName": "1",
+    "connectGmailAccount": true,
+    "emailAccountName": "1234@gmail.com",
+    "id": "4bd08746-9ba6-47f9-bcc9-f19c8105ea21"
+  },
+  {
+    "email": "1234@gmail.com",
+    "name": "1",
+    "password": "1",
+    "connectStore": false,
+    "storeName": "",
+    "connectGmailAccount": true,
+    "emailAccountName": "1234@gmail.com",
+    "id": "d2b1b8d7-2c46-4614-a126-63e095518747"
+  },
+  {
+    "email": "1234@gmail.com",
+    "name": "1",
+    "password": "1",
+    "connectStore": false,
+    "storeName": "",
+    "connectGmailAccount": true,
+    "emailAccountName": "1234@gmail.com",
+    "id": "f3c183ff-6a46-4d75-af58-5ea8a2a1b193"
   }
 ]

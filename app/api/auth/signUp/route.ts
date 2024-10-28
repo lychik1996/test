@@ -1,6 +1,6 @@
 import { User } from '@/fakebase/interface';
 import path from 'path';
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 
 const usersFilePath = path.join(process.cwd(), 'fakebase', 'users.json');
@@ -14,15 +14,7 @@ export const POST = async (req: Request) => {
     connectStore,
     connectGmailAccount,
   } = await req.json();
-  console.log(
-    email,
-    name,
-    password,
-    storeName,
-    emailAccountName,
-    connectStore,
-    connectGmailAccount
-  );
+  
   if (!email || !name || !password) {
     return new Response(
       JSON.stringify({ message: 'Failed to get email/name/password' }),
@@ -32,7 +24,7 @@ export const POST = async (req: Request) => {
     );
   }
   try {
-    const data = fs.readFileSync(usersFilePath, 'utf-8');
+    const data = await fs.readFile(usersFilePath, 'utf-8'); 
     const users: User[] = JSON.parse(data);
     const user: User = {
       email: email,
@@ -46,7 +38,7 @@ export const POST = async (req: Request) => {
     };
     
     users.push(user);
-    fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2), 'utf-8');
+    await fs.writeFile(usersFilePath, JSON.stringify(users, null, 2), 'utf-8');
     
     return new Response(
       JSON.stringify({ message: 'User registered successfully', user }),
