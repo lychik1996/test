@@ -1,41 +1,32 @@
-import { users } from '@/fakebase/users';
+import path from 'path';
+import fs from 'fs';
+import { User } from '@/fakebase/inteface';
+import { log } from 'console';
 
-export default async function Post(req: Request) {
-  const { email, name, password, id } = await req.json();
-  if (!email || !name || !password || !id) {
+const usersFilePath = path.join(process.cwd(), 'fakebase', 'users.json');
+export const POST=async(req: Request)=>{
+  const { email, password} = await req.json();
+  if (!email || !password) {
     return new Response(
-      JSON.stringify({ message: 'Failed to get email/name/password/id' }),
+      JSON.stringify({ message: 'Failed to get email/password' }),
       {
         status: 400,
       }
     );
   }
   try {
-    const user = users.find((us) => us.id === id);
-    if (!user) {
-      return new Response(JSON.stringify({ message: 'Failed to get user' }), {
-        status: 400,
-      });
-    }
-    const isEmail = user.email === email;
+    const data = fs.readFileSync(usersFilePath, 'utf-8');
+    const users: User[] = JSON.parse(data);
+    const isEmail = users.find((us) => us.email === email);
     if (!isEmail) {
       return new Response(
-        JSON.stringify({ message: 'This email is not valid' }),
+        JSON.stringify({ message: 'Email is not valid' }),
         {
           status: 400,
         }
       );
     }
-    const isName = user.name === name;
-    if (!isName) {
-      return new Response(
-        JSON.stringify({ message: 'This name is not valid' }),
-        {
-          status: 400,
-        }
-      );
-    }
-    const isPassword = user.password === password;
+    const isPassword = users.find((us)=>us.email ===email && us.password ===password)
     if (!isPassword) {
       return new Response(
         JSON.stringify({ message: 'This password is not valid' }),
@@ -43,9 +34,11 @@ export default async function Post(req: Request) {
           status: 400,
         }
       );
-    }
+    };
+    const user = users.find((us)=>us.email===email);
+    
     return new Response(
-      JSON.stringify({ message: 'User signIn successfully', user }),
+      JSON.stringify({ message: 'User signIn successfully',user}),
       {
         status: 201,
       }

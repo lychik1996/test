@@ -39,7 +39,13 @@ interface useSignUserInfoProps {
   setAddEmailAccountName:(newAccountName:string)=>void;
   setRemoveEmailAccountName:()=>void;
   setUseAnotherEmailAccount:()=>void;
-  
+
+  signUp:boolean;
+  setSignUp:()=>void;
+  signIn:boolean;
+  setSignIn:()=>void;
+  setCloseSign:()=>void;
+
 }
 
 export const useSignUserInfo = create<useSignUserInfoProps>((set) => ({
@@ -81,4 +87,10 @@ export const useSignUserInfo = create<useSignUserInfoProps>((set) => ({
   setAddEmailAccountName:(newEmailAccountName)=>set({emailAccountName:newEmailAccountName}),
   setRemoveEmailAccountName:()=>set({emailAccountName:''}),
   setUseAnotherEmailAccount:()=>set({anotherEmailAccount:true}),
+
+  signUp:false,
+  setSignUp:()=>set({signUp:true}),
+  signIn:false,
+  setSignIn:()=>set({signIn:true}),
+  setCloseSign:()=>set({signIn:false, signUp:false}),
 }));

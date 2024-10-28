@@ -25,7 +25,8 @@ const config: Config = {
         chadBlue30:'rgb(150, 202, 247)',
         chadBlue0:'rgb(50, 171, 242)',
         shade100:'rgb(248, 249, 252)',
-        darkBlue95:'rgb(201, 211, 224)'
+        darkBlue95:'rgb(201, 211, 224)',
+        shade0:"rgb(3, 14, 22)",
       },
       borderColor:{
         chadBlue0:'rgb(50, 171, 242)',

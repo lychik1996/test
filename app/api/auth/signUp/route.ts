@@ -1,7 +1,28 @@
-import { User, users } from '@/fakebase/users';
+import { User } from '@/fakebase/inteface';
+import path from 'path';
+import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
-export default async function POST(req: Request) {
-  const { email, name, password } = await req.json();
+
+const usersFilePath = path.join(process.cwd(), 'fakebase', 'users.json');
+export const POST = async (req: Request) => {
+  const {
+    email,
+    name,
+    password,
+    storeName,
+    emailAccountName,
+    connectStore,
+    connectGmailAccount,
+  } = await req.json();
+  console.log(
+    email,
+    name,
+    password,
+    storeName,
+    emailAccountName,
+    connectStore,
+    connectGmailAccount
+  );
   if (!email || !name || !password) {
     return new Response(
       JSON.stringify({ message: 'Failed to get email/name/password' }),
@@ -11,24 +32,22 @@ export default async function POST(req: Request) {
     );
   }
   try {
+    const data = fs.readFileSync(usersFilePath, 'utf-8');
+    const users: User[] = JSON.parse(data);
     const user: User = {
       email: email,
       name: name,
       password: password,
-      isShopifyStore: null,
-      isSupportEmail: null,
+      connectStore: connectStore,
+      storeName: storeName,
+      connectGmailAccount: connectGmailAccount,
+      emailAccountName: emailAccountName,
       id: uuidv4(),
     };
-    const existUser = users.some((us) => us.id === user.id);
-    if (existUser) {
-      return new Response(
-        JSON.stringify({ message: 'This user is already exist' }),
-        {
-          status: 400,
-        }
-      );
-    }
+    
     users.push(user);
+    fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2), 'utf-8');
+    
     return new Response(
       JSON.stringify({ message: 'User registered successfully', user }),
       {
@@ -40,4 +59,4 @@ export default async function POST(req: Request) {
       status: 500,
     });
   }
-}
+};

@@ -11,8 +11,11 @@ export default function SignResponse({
   href: string;
 }) {
   const router = useRouter();
-
+  const {setSignUp}=useSignUserInfo();
   const handlePushHref = () => {
+    if(href==='/'){
+      setSignUp();
+    }
     router.push(`/${href}`);
   };
   return (

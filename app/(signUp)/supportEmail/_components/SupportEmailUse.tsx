@@ -1,8 +1,10 @@
 import SignParamsShopifyEmail from '@/components/SignParamsShopifyEmail';
 import { useSignUserInfo } from '@/store/use-SignUserInfo';
 import { Button } from '@mui/material';
+import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 const arrParametrsShopify = [
   {
     header: 'Contextual responses',
@@ -18,13 +20,44 @@ const arrParametrsShopify = [
   },
 ];
 export default function SupportEmailUse({handleClickGmailUse}:{handleClickGmailUse:()=>void}) {
-  const {setAddEmailAccountName,userInfo, setConnectGmailAccount}=useSignUserInfo();
+  const {setAddEmailAccountName,userInfo,connectStore,storeName, setConnectGmailAccount, setSignUp}=useSignUserInfo();
   const router = useRouter();
+
   const handleConnectGmailAccount = ()=>{
     setConnectGmailAccount();
     setAddEmailAccountName(userInfo.email);
-    router.push('/');
+    setSignUp();
   };
+  const handleCreateAccount =()=>{
+    handleConnectGmailAccount();
+    const signUp = async()=>{
+        axios.post('/api/auth/signUp',{
+          email:userInfo.email,
+          password:userInfo.password,
+          name:userInfo.name,
+          storeName:storeName,
+          emailAccountName:userInfo.email,
+          connectStore:connectStore,
+          connectGmailAccount:true,
+        })
+        .then(()=>{
+          toast.success('Create account');
+          localStorage.setItem('userInfo', JSON.stringify({
+            isLogin: true,
+            name: userInfo.name,
+            connectStore:connectStore,
+            storeName:storeName,
+            emailAccountName:userInfo.email,
+            connectGmailAccount:true,
+        }));
+          router.push('/');
+        })
+        .catch(()=>{
+          toast.error("failed to create account")
+        })
+    }
+    signUp();
+  }
   
   return (
     <>
@@ -38,7 +71,7 @@ export default function SupportEmailUse({handleClickGmailUse}:{handleClickGmailU
         ))}
       </div>
       <Button
-      onClick={handleConnectGmailAccount}
+      onClick={handleCreateAccount}
         variant="contained"
         disableElevation
         className="bg-blue-400 normal-case  h-[50px] w-full mb-4 relative text-sm"

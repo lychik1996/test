@@ -2,12 +2,13 @@
 
 import { Button, TextField, InputAdornment, IconButton } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Link from 'next/link';
 
 import SignHeader from '@/components/SignHeader';
 import { useSignUserInfo } from '@/store/use-SignUserInfo';
 import { useRouter } from 'next/navigation';
+import SignPasswordInput from '@/components/SignPasswordInput';
+import SignEmailInput from '@/components/SignEmailInput';
 
 const textSxParams = {
   backgroundColor: 'rgb(248, 249, 252)',
@@ -23,7 +24,6 @@ const textSxParams = {
 };
 
 export default function Sign() {
-  const [showPassword, setShowPassword] = useState(false);
   const [isNextHref,setIsNextHref] = useState(false);
   const {
     setUserInfo,
@@ -43,7 +43,6 @@ export default function Sign() {
     setRemoveEmailAccountName,
     setRemoveStoreName,
   } = useSignUserInfo();
-  
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: userInfo.email,
@@ -51,8 +50,6 @@ export default function Sign() {
     password: userInfo.password,
   });
   
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setUserInfo(formData);
@@ -115,20 +112,12 @@ export default function Sign() {
         {...(isNextHref && { nextHref: 'shopify' })}
       />
       <form onSubmit={handleSubmit} className="flex flex-col gap-6 mb-4">
-        <label className="flex flex-col text-shade40 text-xs font-medium gap-2">
-          Email
-          <TextField
-            type="email"
-            size="small"
-            placeholder="megachad@trychad.com"
-            required
-            sx={textSxParams}
-            value={formData.email}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, email: e.target.value }))
-            }
-          />
-        </label>
+        <SignEmailInput
+        formData={formData}
+        setFormData={setFormData}
+        textSxParams={textSxParams}
+        sign="signUp"
+        />
         <label className="flex flex-col text-shade40 text-xs font-medium gap-2">
           Your Name
           <TextField
@@ -143,29 +132,12 @@ export default function Sign() {
             }
           />
         </label>
-        <label className="flex flex-col text-shade40 text-xs font-medium gap-2">
-          Password
-          <TextField
-            type={showPassword ? 'text' : 'password'}
-            size="small"
-            placeholder="Enter password"
-            required
-            value={formData.password}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, password: e.target.value }))
-            }
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <IconButton onClick={handleClickShowPassword} edge="end">
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                ),
-              },
-            }}
-            sx={textSxParams}
-          />
-        </label>
+        <SignPasswordInput
+        formData={formData}
+        setFormData={setFormData}
+        textSxParams={textSxParams}
+        
+        />
         {!createAccount ? (
           <Button
             type="submit"
@@ -191,7 +163,7 @@ export default function Sign() {
       </form>
       <div className="text-shade40 text-xs flex items-center justify-center gap-1">
         Already have an account?{' '}
-        <Link href="/sign" className="text-chadBlue">
+        <Link href="/signIn" className="text-chadBlue">
           Login
         </Link>
       </div>
