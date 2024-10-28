@@ -1,3 +1,4 @@
+
 import { Check } from "@mui/icons-material";
 
 export default function SignParamsShopifyEmail({header, info}:{header:string, info:string}){

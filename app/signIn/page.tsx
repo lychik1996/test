@@ -39,9 +39,6 @@ export default function SignIn() {
         })
         .then((res)=>{
             const userInfo= res.data.user;
-            console.log(userInfo);
-            
-            
             toast.success('Sign');
             setSignIn();
             localStorage.setItem('userInfo', JSON.stringify({

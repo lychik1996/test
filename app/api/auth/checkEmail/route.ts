@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import { User } from '@/fakebase/inteface';
+import { User } from '@/fakebase/interface';
 const usersFilePath = path.join(process.cwd(), 'fakebase', 'users.json');
 
 export const POST=async(req: Request)=>{

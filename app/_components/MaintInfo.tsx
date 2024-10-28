@@ -10,7 +10,7 @@ export default function MainInfo(){
         const storedUserInfo = localStorage.getItem('userInfo');
         if (storedUserInfo) {
             const userInfo = JSON.parse(storedUserInfo);
-            setUserName(userInfo.name || ''); // Отримати ім'я з localStorage
+            setUserName(userInfo.name || ''); 
         }
     }, []);
     const handleLogout = ()=>{

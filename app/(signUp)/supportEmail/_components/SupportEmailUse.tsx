@@ -1,3 +1,4 @@
+'use client'
 import SignParamsShopifyEmail from '@/components/SignParamsShopifyEmail';
 import { useSignUserInfo } from '@/store/use-SignUserInfo';
 import { Button } from '@mui/material';

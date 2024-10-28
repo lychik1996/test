@@ -1,4 +1,4 @@
-import { User } from '@/fakebase/inteface';
+import { User } from '@/fakebase/interface';
 import path from 'path';
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';

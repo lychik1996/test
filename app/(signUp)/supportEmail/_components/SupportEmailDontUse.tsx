@@ -1,3 +1,5 @@
+'use client'
+
 import SignSelect from '@/components/SignSelect';
 import { useSignUserInfo } from '@/store/use-SignUserInfo';
 import { Button } from '@mui/material';

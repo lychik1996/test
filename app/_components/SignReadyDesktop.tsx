@@ -1,32 +1,40 @@
-"use client";
+'use client';
 import { Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSignUserInfo } from '@/store/use-SignUserInfo';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
-export default function SignReadyDesktop(
-    {setOnClose}:{setOnClose:()=>void}
-) {
-    const {setCloseSign} = useSignUserInfo();
-    const handleOnClose=()=>{
-        setCloseSign();
-        setOnClose();
-    };
-    
-    useEffect(()=>{
-        const storedUserInfo = localStorage.getItem('userInfo');
-        const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
-        const storeName = userInfo?.storeName && userInfo.storeName;
-        const emailAccountName = userInfo?.emailAccountName && userInfo.emailAccountName;
-         storeName && storeName.length>0 && toast.success(`Shopify account connected ${storeName}`);
-        emailAccountName && emailAccountName.length>0 && toast.success(`Customer support account connected ${emailAccountName}`);
+export default function SignReadyDesktop({
+  setOnClose,
+}: {
+  setOnClose: () => void;
+}) {
+  const { setCloseSign } = useSignUserInfo();
+  const handleOnClose = () => {
+    setCloseSign();
+    setOnClose();
+  };
 
-    },[])
+  useEffect(() => {
+    const storedUserInfo = localStorage.getItem('userInfo');
+    if (storedUserInfo) {
+      const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+      const storeName = userInfo?.storeName && userInfo.storeName;
+      const emailAccountName =
+        userInfo?.emailAccountName && userInfo.emailAccountName;
+      storeName &&
+        storeName.length > 0 &&
+        toast.success(`Shopify account connected ${storeName}`);
+      emailAccountName &&
+        emailAccountName.length > 0 &&
+        toast.success(`Customer support account connected ${emailAccountName}`);
+    }
+  }, []);
   return (
     <div className="w-full h-full min-h-fit flex justify-center sm:items-center  bg-shade0/70">
       <div className=" w-full sm:w-[434px] sm:rounded-lg sm:shadow-signR px-[39px] pt-6 pb-[46px]  flex flex-col  bg-white ">
         <div className="w-full text-end">
-          <CloseIcon onClick={handleOnClose} className='cursor-pointer'/>
+          <CloseIcon onClick={handleOnClose} className="cursor-pointer" />
         </div>
         <h1 className="text-darkBlue20 text-base sm:text-xl font-semibold mb-2 font-eudoxus">
           You`re ready to go! 🚀
@@ -51,7 +59,7 @@ export default function SignReadyDesktop(
           </p>
         </div>
         <Button
-        onClick={handleOnClose}
+          onClick={handleOnClose}
           variant="contained"
           disableElevation
           className="bg-blue-400 normal-case rounded-lg h-[43px] w-full"
