@@ -1,3 +1,4 @@
+'use client';
 import NavBar from "./_components/navbar/NavBar"
 
 export default function Layout({ children }: { children: React.ReactNode }){

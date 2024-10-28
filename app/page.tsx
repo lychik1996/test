@@ -1,3 +1,4 @@
+'use client';
 import AfterSign from "./_components/AfterSign";
 import MainInfo from "./_components/MaintInfo";
 
